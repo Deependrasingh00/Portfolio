@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Deependra Singh — Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060810;
+  --bg2:#0c0f1a;
+  --bg3:#111527;
+  --blue:#4f8ef7;
+  --purple:#8b5cf6;
+  --grad:linear-gradient(135deg,#4f8ef7,#8b5cf6);
+  --text:#e8eaf0;
+  --muted:#8891aa;
+  --border:rgba(79,142,247,0.15);
+  --card:rgba(255,255,255,0.03);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,8,16,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1200px;margin:0 auto}
+.nav-logo{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:.2s}
+.nav-links a:hover{color:#fff}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(6,8,16,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:99}
+.mobile-menu.open{display:block}
+.mobile-menu ul{list-style:none;padding:1.5rem 5%}
+.mobile-menu ul li{padding:.75rem 0;border-bottom:1px solid var(--border)}
+.mobile-menu ul a{color:var(--text);text-decoration:none;font-size:1.05rem;font-weight:500}
+
+/* SECTIONS */
+section{padding:5rem 5%;max-width:1200px;margin:0 auto}
+.section-tag{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.75rem}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:1rem}
+.grad-text{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-sub{color:var(--muted);font-size:1rem;max-width:520px;line-height:1.7}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:64px;max-width:100%}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.25}
+.orb1{width:500px;height:500px;background:#4f8ef7;top:-10%;right:-5%;animation:drift 10s ease-in-out infinite alternate}
+.orb2{width:400px;height:400px;background:#8b5cf6;bottom:-10%;left:-5%;animation:drift 14s ease-in-out infinite alternate-reverse}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(30px,20px)}}
+.hero-content{max-width:1200px;margin:0 auto;width:100%;padding:0 5%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.3);border-radius:50px;padding:.35rem 1rem;font-size:.8rem;color:var(--blue);font-weight:600;margin-bottom:1.5rem}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#4aed88;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-name{font-size:clamp(2.5rem,6vw,4.2rem);font-weight:800;line-height:1;margin-bottom:.5rem}
+.typed-wrap{font-size:clamp(1.1rem,2.5vw,1.5rem);color:var(--blue);font-weight:600;margin-bottom:1.25rem;min-height:2rem;font-family:'Syne',sans-serif}
+.hero-desc{color:var(--muted);font-size:1rem;line-height:1.8;max-width:480px;margin-bottom:2rem}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2.5rem}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--grad);color:#fff;padding:.7rem 1.5rem;border-radius:50px;font-weight:600;font-size:.9rem;text-decoration:none;border:none;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-primary:hover{opacity:.85;transform:translateY(-2px)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--text);padding:.65rem 1.4rem;border-radius:50px;font-weight:600;font-size:.9rem;text-decoration:none;border:1px solid var(--border);cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:2rem;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.75rem;color:var(--muted);font-weight:500;margin-top:.2rem}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.code-card{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:1.5rem;font-family:monospace;font-size:.8rem;line-height:1.7;position:relative;min-width:300px;box-shadow:0 0 40px rgba(79,142,247,.08)}
+.code-bar{display:flex;gap:.4rem;margin-bottom:1rem}
+.dot{width:10px;height:10px;border-radius:50%}
+.d1{background:#ff5f56}.d2{background:#ffbd2e}.d3{background:#27c93f}
+.c-comment{color:#6b7a99}.c-key{color:#8b5cf6}.c-str{color:#4aed88}.c-prop{color:#4f8ef7}.c-val{color:#f97316}
+.floating-badge{position:absolute;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:.6rem 1rem;font-size:.75rem;font-weight:700;color:var(--text);white-space:nowrap;animation:float 4s ease-in-out infinite}
+.fb1{top:-1.5rem;right:-1rem;animation-delay:0s}
+.fb2{bottom:2rem;left:-2rem;animation-delay:1.5s}
+.fb3{top:40%;right:-2.5rem;animation-delay:.8s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ABOUT */
+#about{max-width:1200px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.about-card-list{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;transition:.3s}
+.about-card:hover{border-color:rgba(79,142,247,.4);transform:translateY(-4px)}
+.about-card-icon{font-size:1.5rem;margin-bottom:.5rem}
+.about-card h4{font-size:.9rem;font-weight:700;margin-bottom:.3rem}
+.about-card p{font-size:.8rem;color:var(--muted);line-height:1.5}
+.avatar-box{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:2.5rem;text-align:center;position:relative}
+.avatar-initials{width:100px;height:100px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#fff;margin:0 auto 1.25rem;box-shadow:0 0 40px rgba(79,142,247,.3)}
+.avatar-name{font-size:1.4rem;font-weight:800;margin-bottom:.25rem}
+.avatar-role{color:var(--blue);font-size:.9rem;font-weight:600;margin-bottom:1rem}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.tag{background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);border-radius:50px;padding:.3rem .75rem;font-size:.75rem;color:var(--blue);font-weight:500}
+
+/* SKILLS */
+#skills{max-width:1200px}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
+.skill-group{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:.3s}
+.skill-group:hover{border-color:rgba(79,142,247,.3)}
+.skill-group-title{font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:1.25rem}
+.skill-item{margin-bottom:1rem}
+.skill-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.skill-name{font-size:.85rem;font-weight:500}
+.skill-pct{font-size:.75rem;color:var(--muted)}
+.bar{height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:var(--grad);transition:width 1s ease}
+
+/* PROJECTS */
+#projects{max-width:1200px}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;margin-top:3rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.3s;display:flex;flex-direction:column}
+.project-card:hover{border-color:rgba(79,142,247,.4);transform:translateY(-6px);box-shadow:0 20px 60px rgba(79,142,247,.1)}
+.project-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
+.project-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+.project-title{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.project-desc{color:var(--muted);font-size:.85rem;line-height:1.6;flex:1;margin-bottom:1rem}
+.project-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem}
+.project-tag{background:rgba(79,142,247,.07);border:1px solid rgba(79,142,247,.15);border-radius:50px;padding:.2rem .65rem;font-size:.7rem;color:var(--blue);font-weight:500}
+.project-links{display:flex;gap:.75rem}
+.proj-btn{flex:1;text-align:center;padding:.55rem;border-radius:8px;font-size:.8rem;font-weight:600;text-decoration:none;transition:.2s}
+.proj-btn.primary{background:var(--grad);color:#fff}
+.proj-btn.secondary{border:1px solid var(--border);color:var(--muted)}
+.proj-btn:hover{opacity:.8}
+
+/* EDUCATION */
+#education{max-width:1200px}
+.timeline{position:relative;padding-left:2rem;margin-top:3rem}
+.timeline::before{content:'';position:absolute;left:.75rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--purple),transparent)}
+.tl-item{position:relative;margin-bottom:2.5rem}
+.tl-dot{position:absolute;left:-2.15rem;top:.3rem;width:14px;height:14px;border-radius:50%;background:var(--grad);box-shadow:0 0 0 3px rgba(79,142,247,.2)}
+.tl-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:.3s}
+.tl-card:hover{border-color:rgba(79,142,247,.3)}
+.tl-year{font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--blue);text-transform:uppercase;margin-bottom:.4rem}
+.tl-title{font-size:1.05rem;font-weight:700;margin-bottom:.25rem}
+.tl-sub{color:var(--muted);font-size:.85rem;margin-bottom:.5rem}
+.tl-desc{color:var(--muted);font-size:.83rem;line-height:1.6}
+
+/* ACHIEVEMENTS */
+#achievements{max-width:1200px}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:3rem}
+.ach-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center;transition:.3s}
+.ach-card:hover{border-color:rgba(79,142,247,.4);transform:translateY(-4px)}
+.ach-icon{font-size:2rem;margin-bottom:.75rem}
+.ach-title{font-size:.9rem;font-weight:700;margin-bottom:.3rem}
+.ach-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+/* CONTACT */
+#contact{max-width:1200px}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;margin-top:3rem}
+.contact-info h3{font-size:1.2rem;font-weight:700;margin-bottom:1.5rem}
+.contact-link{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:var(--text);margin-bottom:.75rem;transition:.3s}
+.contact-link:hover{border-color:rgba(79,142,247,.4);transform:translateX(4px)}
+.contact-link-icon{width:40px;height:40px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.contact-link-text strong{display:block;font-size:.85rem;font-weight:700}
+.contact-link-text span{font-size:.78rem;color:var(--muted)}
+.contact-form{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:2rem}
+.form-row{margin-bottom:1.25rem}
+.form-row label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.06em}
+.form-row input,.form-row textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:.2s}
+.form-row input:focus,.form-row textarea:focus{border-color:var(--blue)}
+.form-row textarea{resize:vertical;min-height:120px}
+.form-row input::placeholder,.form-row textarea::placeholder{color:var(--muted)}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 5%;text-align:center}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-social{display:flex;justify-content:center;gap:1rem;margin-bottom:1.5rem}
+.footer-social a{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1rem;color:var(--muted);transition:.2s}
+.footer-social a:hover{border-color:var(--blue);color:var(--blue)}
+.footer-copy{font-size:.82rem;color:var(--muted)}
+
+/* SCROLL TOP */
+#scrolltop{position:fixed;bottom:2rem;right:2rem;width:42px;height:42px;border-radius:50%;background:var(--grad);border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1.1rem;color:#fff;z-index:50;transition:.2s;box-shadow:0 4px 20px rgba(79,142,247,.3)}
+#scrolltop:hover{transform:translateY(-3px)}
+#scrolltop.show{display:flex}
+
+/* DIVIDER */
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:0 auto}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;gap:2rem}
+  .hero-visual{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  nav .nav-links{display:none}
+  .hamburger{display:flex}
+  .about-card-list{grid-template-columns:1fr}
+  .hero-stats{gap:1rem}
+  section{padding:4rem 4%}
+}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">DS</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <ul>
+    <li><a href="#hero" onclick="closeMob()">Home</a></li>
+    <li><a href="#about" onclick="closeMob()">About</a></li>
+    <li><a href="#skills" onclick="closeMob()">Skills</a></li>
+    <li><a href="#projects" onclick="closeMob()">Projects</a></li>
+    <li><a href="#education" onclick="closeMob()">Education</a></li>
+    <li><a href="#contact" onclick="closeMob()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section id="hero" style="padding:0;max-width:100%">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+  </div>
+  <div class="hero-content">
+    <div class="fade-in">
+      <div class="hero-badge">
+        <span>🟢 Available for Internship</span>
+      </div>
+      <h1 class="hero-name">Deependra<br><span class="grad-text">Singh</span></h1>
+      <div class="typed-wrap" id="typed-text"></div>
+      <p class="hero-desc">MCA Student passionate about building modern web applications using React, FastAPI, Django, MongoDB, and modern technologies.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">⬇ Download Resume</a>
+        <a href="#contact" class="btn-outline">✉ Contact Me</a>
+        <a href="https://github.com" class="btn-outline" target="_blank">GitHub</a>
+        <a href="https://linkedin.com" class="btn-outline" target="_blank">LinkedIn</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Projects Built</div></div>
+        <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Technologies</div></div>
+        <div class="stat"><div class="stat-num">10+</div><div class="stat-label">GitHub Repos</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div style="position:relative">
+        <div class="code-card">
+          <div class="code-bar"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <div><span class="c-comment">// deependra.js</span></div>
+          <div><span class="c-key">const</span> <span class="c-prop">developer</span> = {</div>
+          <div>&nbsp; <span class="c-prop">name</span>: <span class="c-str">"Deependra Singh"</span>,</div>
+          <div>&nbsp; <span class="c-prop">role</span>: <span class="c-str">"Full Stack Dev"</span>,</div>
+          <div>&nbsp; <span class="c-prop">stack</span>: [<span class="c-str">"React"</span>, <span class="c-str">"Django"</span>],</div>
+          <div>&nbsp; <span class="c-prop">learning</span>: <span class="c-val">true</span>,</div>
+          <div>&nbsp; <span class="c-prop">available</span>: <span class="c-val">true</span></div>
+          <div>};</div>
+          <br>
+          <div><span class="c-key">export default</span> <span class="c-prop">developer</span>;</div>
+        </div>
+        <div class="floating-badge fb1">⚛ React</div>
+        <div class="floating-badge fb3">🍃 MongoDB</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-in">
+    <div class="section-tag">About Me</div>
+    <h2 class="section-title">Passionate <span class="grad-text">Developer</span></h2>
+    <p class="section-sub">Building scalable web applications from concept to deployment.</p>
+  </div>
+  <div class="about-grid fade-in">
+    <div>
+      <p style="color:var(--muted);line-height:1.9;font-size:.95rem;margin-bottom:1.5rem">I am an MCA student currently learning Full Stack Development with a strong interest in frontend development, backend APIs, databases, and scalable web applications. I enjoy solving real-world problems, building responsive user interfaces, and continuously improving my development skills.</p>
+      <p style="color:var(--muted);line-height:1.9;font-size:.95rem">Currently pursuing my MCA from Poornima University, I combine formal education with hands-on project building to sharpen my technical skills every day.</p>
+      <div class="about-card-list">
+        <div class="about-card">
+          <div class="about-card-icon">🧩</div>
+          <h4>Problem Solving</h4>
+          <p>Analytical approach to breaking down complex technical challenges</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">🔌</div>
+          <h4>API Integration</h4>
+          <p>RESTful APIs with FastAPI, Express.js and Django REST Framework</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">📱</div>
+          <h4>Responsive Design</h4>
+          <p>Mobile-first interfaces that work seamlessly across all devices</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">🗄</div>
+          <h4>Database Handling</h4>
+          <p>MongoDB and MySQL with efficient schema design and queries</p>
+        </div>
+      </div>
+    </div>
+    <div class="avatar-box">
+      <div class="avatar-initials">DS</div>
+      <div class="avatar-name">Deependra Singh</div>
+      <div class="avatar-role">MCA Student · Full Stack Developer</div>
+      <div style="color:var(--muted);font-size:.83rem;margin-bottom:1.25rem">📍 India &nbsp;·&nbsp; 🎓 Poornima University</div>
+      <div class="tag-wrap">
+        <span class="tag">React</span><span class="tag">Django</span><span class="tag">FastAPI</span>
+        <span class="tag">MongoDB</span><span class="tag">Node.js</span><span class="tag">Tailwind CSS</span>
+        <span class="tag">Git</span><span class="tag">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="fade-in">
+    <div class="section-tag">Technical Skills</div>
+    <h2 class="section-title">My <span class="grad-text">Skill Set</span></h2>
+    <p class="section-sub">Technologies I work with to bring ideas to life.</p>
+  </div>
+  <div class="skills-grid fade-in">
+    <div class="skill-group">
+      <div class="skill-group-title">🎨 Frontend</div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">HTML5</span><span class="skill-pct">90%</span></div><div class="bar"><div class="bar-fill" style="width:90%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">CSS3</span><span class="skill-pct">85%</span></div><div class="bar"><div class="bar-fill" style="width:85%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">JavaScript</span><span class="skill-pct">80%</span></div><div class="bar"><div class="bar-fill" style="width:80%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">React</span><span class="skill-pct">78%</span></div><div class="bar"><div class="bar-fill" style="width:78%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">Tailwind CSS</span><span class="skill-pct">82%</span></div><div class="bar"><div class="bar-fill" style="width:82%"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">⚙ Backend</div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">Node.js</span><span class="skill-pct">72%</span></div><div class="bar"><div class="bar-fill" style="width:72%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">Express.js</span><span class="skill-pct">70%</span></div><div class="bar"><div class="bar-fill" style="width:70%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">FastAPI</span><span class="skill-pct">68%</span></div><div class="bar"><div class="bar-fill" style="width:68%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">Django</span><span class="skill-pct">65%</span></div><div class="bar"><div class="bar-fill" style="width:65%"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">🗄 Database</div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">MongoDB</span><span class="skill-pct">75%</span></div><div class="bar"><div class="bar-fill" style="width:75%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">MySQL</span><span class="skill-pct">70%</span></div><div class="bar"><div class="bar-fill" style="width:70%"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">🛠 Tools</div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">Git / GitHub</span><span class="skill-pct">80%</span></div><div class="bar"><div class="bar-fill" style="width:80%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">Postman</span><span class="skill-pct">75%</span></div><div class="bar"><div class="bar-fill" style="width:75%"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span class="skill-name">VS Code</span><span class="skill-pct">90%</span></div><div class="bar"><div class="bar-fill" style="width:90%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="fade-in">
+    <div class="section-tag">Projects</div>
+    <h2 class="section-title">Things I've <span class="grad-text">Built</span></h2>
+    <p class="section-sub">Real-world applications demonstrating full stack capabilities.</p>
+  </div>
+  <div class="projects-grid fade-in">
+
+    <!-- Portfolio -->
+    <div class="project-card">
+      <div class="project-img" style="background:linear-gradient(135deg,#0c0f1a,#1a1040)">
+        <span style="font-size:3.5rem">🧑‍💻</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Developer Portfolio</div>
+        <div class="project-desc">A modern, fully responsive developer portfolio built with React and Tailwind CSS. Features smooth animations, dark theme, glassmorphism effects, and showcases projects, skills, and contact info — exactly the one you're viewing right now.</div>
+        <div class="project-tags">
+          <span class="project-tag">React</span><span class="project-tag">Tailwind CSS</span><span class="project-tag">Framer Motion</span><span class="project-tag">Vite</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-btn primary">🔗 Live Demo</a>
+          <a href="https://github.com" class="proj-btn secondary" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gym Management -->
+    <div class="project-card">
+      <div class="project-img" style="background:linear-gradient(135deg,#0a1a0c,#0d2a10)">
+        <span style="font-size:3.5rem">💪</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Gym Management System</div>
+        <div class="project-desc">A comprehensive gym management platform with member registration, subscription tracking, attendance management, payment handling, and an admin dashboard. Built with a full CRUD REST API backend and dynamic React frontend.</div>
+        <div class="project-tags">
+          <span class="project-tag">React</span><span class="project-tag">Node.js</span><span class="project-tag">Express.js</span><span class="project-tag">MongoDB</span><span class="project-tag">JWT</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-btn primary">🔗 Live Demo</a>
+          <a href="https://github.com" class="proj-btn secondary" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- E-Commerce -->
+    <div class="project-card">
+      <div class="project-img" style="background:linear-gradient(135deg,#1a0c0a,#2a140d)">
+        <span style="font-size:3.5rem">🛒</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">E-Commerce Platform</div>
+        <div class="project-desc">A full-featured e-commerce web application with product catalog, shopping cart, user authentication, order management, and payment integration. Includes an admin panel for inventory and order tracking.</div>
+        <div class="project-tags">
+          <span class="project-tag">React</span><span class="project-tag">Django</span><span class="project-tag">PostgreSQL</span><span class="project-tag">REST API</span><span class="project-tag">Tailwind</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-btn primary">🔗 Live Demo</a>
+          <a href="https://github.com" class="proj-btn secondary" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Management -->
+    <div class="project-card">
+      <div class="project-img" style="background:linear-gradient(135deg,#0c1020,#101828)">
+        <span style="font-size:3.5rem">🎓</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Student Management System</div>
+        <div class="project-desc">A full CRUD application using Express.js and MongoDB with REST APIs for managing student data, courses, grades, and attendance records. Features search, filter, and export functionality.</div>
+        <div class="project-tags">
+          <span class="project-tag">Express.js</span><span class="project-tag">MongoDB</span><span class="project-tag">REST API</span><span class="project-tag">Node.js</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-btn primary">🔗 Live Demo</a>
+          <a href="https://github.com" class="proj-btn secondary" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth System -->
+    <div class="project-card">
+      <div class="project-img" style="background:linear-gradient(135deg,#0f0c1a,#1a1030)">
+        <span style="font-size:3.5rem">🔐</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Authentication System</div>
+        <div class="project-desc">JWT-based authentication system with secure login, signup, password hashing, token refresh, and protected route middleware. Includes email verification and role-based access control.</div>
+        <div class="project-tags">
+          <span class="project-tag">FastAPI</span><span class="project-tag">JWT</span><span class="project-tag">MongoDB</span><span class="project-tag">Python</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-btn primary">🔗 Live Demo</a>
+          <a href="https://github.com" class="proj-btn secondary" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="fade-in">
+    <div class="section-tag">Education</div>
+    <h2 class="section-title">My <span class="grad-text">Learning Journey</span></h2>
+    <p class="section-sub">Formal education combined with continuous self-improvement.</p>
+  </div>
+  <div class="timeline fade-in">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2025-2027 </div>
+        <div class="tl-title">Master of Computer Applications (MCA)</div>
+        <div class="tl-sub">Poornima University, Jaipur, India</div>
+        <div class="tl-desc">Pursuing MCA with focus on software engineering, web technologies,and database management systems. Actively building projects to apply academic learning.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2025</div>
+        <div class="tl-title">Full Stack Development Training</div>
+        <div class="tl-sub">React · Django · FastAPI · MongoDB · REST APIs</div>
+        <div class="tl-desc">Completed intensive full stack development training covering modern frontend with React, backend development with Django and FastAPI, database design with MongoDB and MySQL, and deployment practices.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">Ongoing</div>
+        <div class="tl-title">Self-Learning & Project Building</div>
+        <div class="tl-sub">YouTube · Documentation · Open Source · GitHub</div>
+        <div class="tl-desc">Continuously learning through official documentation, building real-world projects, contributing to GitHub, and staying updated with the latest trends in full stack development and cloud technologies.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="fade-in">
+    <div class="section-tag">Achievements</div>
+    <h2 class="section-title">Milestones &amp; <span class="grad-text">Highlights</span></h2>
+  </div>
+  <div class="ach-grid fade-in">
+    <div class="ach-card">
+      <div class="ach-icon">🎯</div>
+      <div class="ach-title">Full Stack Training</div>
+      <div class="ach-desc">Completed comprehensive training in React, Django, FastAPI, and MongoDB</div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">🚀</div>
+      <div class="ach-title">6+ Projects Built</div>
+      <div class="ach-desc">Built portfolio, gym management, e-commerce, and more real-world apps</div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">📚</div>
+      <div class="ach-title">Consistent Learning</div>
+      <div class="ach-desc">Daily coding practice, reading docs, and following modern dev practices</div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">💻</div>
+      <div class="ach-title">GitHub Contributions</div>
+      <div class="ach-desc">Active GitHub profile with consistent commits and public repositories</div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">🧠</div>
+      <div class="ach-title">Problem Solving</div>
+      <div class="ach-desc">Regular DSA practice and debugging complex application logic</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-in">
+    <div class="section-tag">Contact</div>
+    <h2 class="section-title">Let's <span class="grad-text">Connect</span></h2>
+    <p class="section-sub">Open to internships, collaborations, and exciting opportunities.</p>
+  </div>
+  <div class="contact-grid fade-in">
+    <div class="contact-info">
+      <h3>Reach Out</h3>
+      <a href="mailto:deependra@email.com" class="contact-link">
+        <div class="contact-link-icon">✉</div>
+        <div class="contact-link-text"><strong>Email</strong><span>deependra@email.com</span></div>
+      </a>
+      <a href="https://github.com" class="contact-link" target="_blank">
+        <div class="contact-link-icon">🐙</div>
+        <div class="contact-link-text"><strong>GitHub</strong><span>github.com/deependra</span></div>
+      </a>
+      <a href="https://linkedin.com" class="contact-link" target="_blank">
+        <div class="contact-link-icon">💼</div>
+        <div class="contact-link-text"><strong>LinkedIn</strong><span>linkedin.com/in/deependra</span></div>
+      </a>
+      <div style="margin-top:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+        <div style="font-size:.8rem;font-weight:700;color:var(--blue);margin-bottom:.5rem">🟢 Currently Available</div>
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.6">Looking for internship opportunities in Full Stack Development. Feel free to reach out for collaborations or job opportunities!</p>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <label>Your Name</label>
+        <input type="text" placeholder="John Doe"/>
+      </div>
+      <div class="form-row">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com"/>
+      </div>
+      <div class="form-row">
+        <label>Message</label>
+        <textarea placeholder="Hey Deependra, I'd love to connect about..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="handleSend()">✉ Send Message</button>
+      <div id="form-msg" style="display:none;margin-top:1rem;text-align:center;color:#4aed88;font-size:.85rem;font-weight:600">✅ Message sent! I'll get back to you soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-social">
+      <a href="https://github.com" target="_blank" title="GitHub">🐙</a>
+      <a href="https://linkedin.com" target="_blank" title="LinkedIn">💼</a>
+      <a href="mailto:deependra@email.com" title="Email">✉</a>
+    </div>
+    <div class="footer-copy" style="margin-bottom:.5rem;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Deependra Singh</div>
+    <div class="footer-copy">Built with React &amp; Tailwind CSS &nbsp;·&nbsp; © 2025 Deependra Singh. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- SCROLL TOP -->
+<button id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
+
+<script>
+// HAMBURGER
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+ham.addEventListener('click',()=>mob.classList.toggle('open'));
+function closeMob(){mob.classList.remove('open')}
+
+// TYPED
+const roles=["Full Stack Developer","React Developer","Backend Developer","MCA Student"];
+let ri=0,ci=0,deleting=false;
+const el=document.getElementById('typed-text');
+function type(){
+  const r=roles[ri];
+  el.textContent=(deleting?r.slice(0,ci--):r.slice(0,ci++));
+  el.textContent+="|";
+  if(!deleting&&ci>r.length){setTimeout(()=>{deleting=true;type()},1400);return}
+  if(deleting&&ci<0){deleting=false;ri=(ri+1)%roles.length}
+  setTimeout(type,deleting?50:80);
+}
+type();
+
+// SCROLL TOP
+const st=document.getElementById('scrolltop');
+window.addEventListener('scroll',()=>st.classList.toggle('show',window.scrollY>400));
+
+// FADE IN
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// FORM
+function handleSend(){
+  const msg=document.getElementById('form-msg');
+  msg.style.display='block';
+  setTimeout(()=>msg.style.display='none',4000);
+}
+</script>
+</body>
+</html>
